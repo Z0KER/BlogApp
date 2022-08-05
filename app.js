@@ -1,10 +1,11 @@
 // Carregando módulos
-    const express = require("express")
-    const expbs = require("express-handlebars")
-    const bodyParser = require("body-parser")
+    const express = require('express')
+    const expbs = require('express-handlebars')
+    const bodyParser = require('body-parser')
     const app = express()
-    const admin = require("./routes/admin")
-    // const mongoose = require("mongoose")
+    const admin = require('./routes/admin')
+    const path = require('path')
+    // const mongoose = require('mongoose')
 
 // Configurações
 
@@ -13,27 +14,29 @@
         app.use(bodyParser.json())
     // Handlebars
         const hbs = expbs.create({
-            defaultLayout: "main"
+            defaultLayout: 'main'
         })
-        app.engine("handlebars", hbs.engine)
-        app.set("view engine", "handlebars")
+        app.engine('handlebars', hbs.engine)
+        app.set('view engine', 'handlebars')
     // Mongoose
-    // Em breve
+        // Em breve
+    // Public
+        app.use(express.static(path.join(__dirname, 'public')))
 
 
 
 // Rotas
-        app.get("/", (req, res) => {
-            res.send("Rota principal")
+        app.get('/', (req, res) => {
+            res.send('Rota principal')
         })
-        app.get("/posts", (req, res) => {
-            res.send("Lista Posts")
+        app.get('/posts', (req, res) => {
+            res.send('Lista Posts')
         })
-        app.use("/admin", admin)
+        app.use('/admin', admin)
 
 
 // Outros
     const PORT = 8081
     app.listen(PORT, () => {
-        console.log("Servidor rodando!")
+        console.log('Servidor rodando!')
     })
