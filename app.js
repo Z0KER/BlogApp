@@ -36,7 +36,7 @@
 
 
 // Outros
-    const PORT = 8081
+    const PORT = 8080
     app.listen(PORT, () => {
-        console.log('Servidor rodando!')
+        console.log('Server running!')
     })
