@@ -21,16 +21,36 @@ router.get('/', (req, res) => {
         res.render('admin/addcategory')
     })
     router.post('/categories/new', (req, res) => {
-        const newCategory = {
-            name: req.body.name,
-            slug: req.body.slug
+        var errors = []
+
+        if(!req.body.name) {
+            errors.push({text: 'Invalid name'})
         }
 
-        new Category(newCategory).save().then(() => {
-            console.log('Category saved successfully!')
-        }).catch((err) => {
-            console.log('Error saving category: ' + err)
-        })
+        if(!req.body.slug) {
+            errors.push({text: 'Invalid slug'})
+        }
+
+        if(req.body.name.length < 2) {
+            errors.push({text: 'Category name is too small'})
+        }
+
+        if(errors.length > 0) {
+            res.render('admin/addcategory', {errors: errors})
+        } else {
+            const newCategory = {
+                name: req.body.name,
+                slug: req.body.slug
+            }
+    
+            new Category(newCategory).save().then(() => {
+                req.flash('success_msg', 'Category created successfully!')
+                res.redirect('/admin/categories')
+            }).catch((err) => {
+                req.flash('error_msg', 'An error occurred while trying to save the category, please try again!')
+                res.redirect('/admin')
+            })
+        }
     })
 
 
