@@ -15,7 +15,12 @@ router.get('/', (req, res) => {
 
 // Categories
     router.get('/categories', (req, res) => {
-        res.render('admin/categories')
+        Category.find().lean().sort({date: 'desc'}).then((categories) => {
+            res.render('admin/categories', {categories: categories})
+        }).catch((err) => {
+            req.flash('error_msg', 'An error occurred while trying to list the categories, please try again!')
+            res.redirect('/admin')
+        })
     })
     router.get('/categories/add', (req, res) => {
         res.render('admin/addcategory')
