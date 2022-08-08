@@ -11,8 +11,12 @@
             <small>Creation date: {{date}}</small>
             <br>
             <a href="/admin/categories/edit/{{_id}}"><button class="btn btn-success mt-2">Edit category</button></a>
+            <form action="/admin/categories/delete" method="post">
+                <input type="hidden" name="id" value="{{_id}}">
+                <button class="btn btn-danger mt-2">Delete category</button>
+            </form>
         </div>
     </div>
 {{else}}
-
+    <h4 class="mt-2">No category registered!</h4>
 {{/each}}
