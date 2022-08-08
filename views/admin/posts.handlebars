@@ -9,6 +9,12 @@
             <p>{{description}}</p>
             <small>{{date}}</small>
             <small>{{category.name}}</small>
+            <br>
+            <a href="/admin/posts/edit/{{_id}}"><button class="btn btn-success mt-3">Edit post</button></a>
+            <form action="/admin/posts/delete" method="post">
+                <input type="hidden" name="id" value="{{_id}}">
+                <button class="btn btn-danger mt-2">Delete post</button>
+            </form>
         </div>
     </div>
 {{else}}
