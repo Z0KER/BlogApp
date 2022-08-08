@@ -29,4 +29,4 @@ const Post = new Schema({
     }
 })
 
-mongoose.model('posts', Posts)
+mongoose.model('posts', Post)

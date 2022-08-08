@@ -1,3 +1,16 @@
 <h2>Post List</h2>
 <hr>
 <a href="/admin/posts/add"><button class="btn btn-success">New post</button></a>
+
+{{#each posts}} 
+    <div class="card mt-3">
+        <div class="card-body">
+            <h4>{{title}}</h4>
+            <p>{{description}}</p>
+            <small>{{date}}</small>
+            <small>{{category.name}}</small>
+        </div>
+    </div>
+{{else}}
+    <h4 class="mt-2">No post registered!</h4>
+{{/each}}
