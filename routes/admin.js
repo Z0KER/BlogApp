@@ -10,7 +10,15 @@ router.get('/', (req, res) => {
 
 // Posts
     router.get('/posts', (req, res) => {
-        res.send('Post page')
+        res.render('admin/posts')
+    })
+    router.get('/posts/add', (req, res) => {
+        Category.find().lean().then((categories) => {
+            res.render('admin/addpost', {categories: categories})
+        }).catch((err) => {
+            req.flash('error_msg', 'An error occurred while trying to load the form')
+            res.redirec('/admin')
+        })
     })
 
 // Categories
@@ -91,6 +99,5 @@ router.get('/', (req, res) => {
             res.redirect('/adimn/categories')
         })
     })
-
 
 module.exports = router
