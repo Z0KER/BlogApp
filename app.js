@@ -8,6 +8,8 @@
     const mongoose = require('mongoose')
     const session = require('express-session')
     const flash = require('connect-flash')
+    require('./models/Post')
+    const Post = mongoose.model('posts')
 
 // Configurações
     // Session
@@ -49,11 +51,22 @@
 
 // Rotas
     app.get('/', (req, res) => {
-        res.send('Rota principal')
+        Post.find().lean().populate('category').sort({date: 'desc'}).then((posts) => {
+            res.render('index', {posts: posts})
+        }).catch((err) => {
+            req.flash('error_msg', 'There was an internal error!')
+            res.redirect('/404')
+        })
     })
+
+    app.get('/404', (req, res) => {
+        res.send('Error 404!')
+    })
+
     app.get('/posts', (req, res) => {
         res.send('Lista Posts')
     })
+
     app.use('/admin', admin)
 
 

@@ -1,0 +1,24 @@
+<div class="jumbotron">
+  <h1 class="display-4">Welcome to the BlogApp</h1>
+  <p class="lead">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Modi recusandae nisi, ut debitis eligendi doloremque placeat voluptates nostrum animi nesciunt quam? Alias fuga, officia obcaecati aliquid velit placeat similique quibusdam?</p>
+  <hr class="my-4">
+  <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestias excepturi dolor voluptate perspiciatis.</p>
+  <p class="lead">
+    <a class="btn btn-primary btn-lg" href="#" role="button">Create an account</a>
+  </p>
+</div>
+
+<hr>
+
+<h2>Recent posts:</h2>
+
+{{#each posts}}
+<div class="card mt-3">
+    <div class="card-body">
+        <h3>{{title}}</h3>
+        <p>{{description}}</p>
+    </div>
+</div>
+{{else}}
+    <h5>No post registered.</h5>
+{{/each}}

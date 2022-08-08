@@ -1,7 +1,7 @@
 <div class="card">
     <div class="card-body">
         <h4>Edit Post</h4>
-        <form action="/admin/post/edit" method="post">
+        <form action="/admin/posts/edit" method="post">
             <input type="hidden" value="{{post._id}}" name="id">
             <label for="title">Title: </label>
             <input type="text" name="title" class="form-control mt-1" value="{{post.title}}">
