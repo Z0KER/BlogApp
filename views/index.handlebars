@@ -1,11 +1,11 @@
 <div class="jumbotron">
-  <h1 class="display-4">Welcome to the BlogApp</h1>
-  <p class="lead">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Modi recusandae nisi, ut debitis eligendi doloremque placeat voluptates nostrum animi nesciunt quam? Alias fuga, officia obcaecati aliquid velit placeat similique quibusdam?</p>
-  <hr class="my-4">
-  <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestias excepturi dolor voluptate perspiciatis.</p>
-  <p class="lead">
+    <h1 class="display-4">Welcome to the BlogApp</h1>
+    <p class="lead">This is a simple BLOG, powered by Node.js + Express + MongoDB.</p>
+    <hr class="my-4">
+    <p>Here you can read about the news from the world of computing.</p>
+    <p class="lead">
     <a class="btn btn-primary btn-lg" href="#" role="button">Create an account</a>
-  </p>
+    </p>
 </div>
 
 <hr>
@@ -17,6 +17,10 @@
     <div class="card-body">
         <h3>{{title}}</h3>
         <p>{{description}}</p>
+        <a href="/post/{{slug}}"><button class="btn btn-success">Read more</button></a>
+        <hr>
+        <small>Category: {{category.name}}</small><br>
+        <small>Publication date: {{date}}</small>
     </div>
 </div>
 {{else}}
