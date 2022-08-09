@@ -12,6 +12,7 @@
     const Post = mongoose.model('posts')
     require('./models/Category')
     const Category = mongoose.model('categories')
+    const users = require('./routes/user')
 
 // Configurações
     // Session
@@ -113,7 +114,7 @@
     })
 
     app.use('/admin', admin)
-
+    app.use('/users', users)
 
 // Outros
     const PORT = 8080
