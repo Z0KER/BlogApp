@@ -84,6 +84,26 @@
         })
     })
 
+    app.get('/categories/:slug', (req, res) => {
+        Category.findOne({slug: req.params.slug}).lean().then((category) => {
+            if(category) {
+                Post.find({category: category._id}).lean().then((posts) => {
+                    res.render('categories/posts', {posts: posts, category: category})
+                }).catch((err) => {
+                    req.flash('error_msg', 'There was an error listing the posts!')
+                    res.redirect('/')
+                })
+                
+            } else {
+                req.flash('error_msg', 'This category does not exist!')
+                res.redirect('/')
+            }
+        }) .catch((err) => {
+            req.flash('error_msg', 'There was an internal error loading the page for this category!')
+            res.redirect('/')
+        })
+    })
+
     app.get('/404', (req, res) => {
         res.send('Error 404!')
     })
