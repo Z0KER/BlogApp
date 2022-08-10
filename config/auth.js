@@ -1,13 +1,13 @@
 const localStrategy = require('passport-local').Strategy
 const mongoose = require('mongoose')
-const bcrypt = requrie('bcryptjs')
+const bcrypt = require('bcryptjs')
 
 // User model
 require('../models/User')
 const User = mongoose.model('users')
 
 module.exports = function(passport) {
-    passport.use(new localStrategy({usernameField: 'email'}, (email, password, done) => {
+    passport.use(new localStrategy({usernameField: 'email', passwordField: 'password'}, (email, password, done) => {
         User.findOne({email: email}).then((user) => {
             if(!user) {
                 return done(null, false, {message: 'This account does not exist!'})
