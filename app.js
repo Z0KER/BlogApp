@@ -33,6 +33,7 @@
             res.locals.success_msg = req.flash('success_msg')
             res.locals.error_msg = req.flash('error_msg')
             res.locals.error = req.flash('error')
+            res.locals.user = req.user || null
             next()
         })
 
@@ -42,7 +43,21 @@
 
     // Handlebars
         const hbs = expbs.create({
-            defaultLayout: 'main'
+            defaultLayout: 'main',
+            layoutsDir: path.join(__dirname, 'views/layouts'),
+            partialsDir: path.join(__dirname, 'views/partials'),
+
+            // Helpers
+                helpers: {
+                    isAdmin: function(object, options) {
+                        let obj = object
+                        
+                        if(obj.isAdmin == 1) {
+                            return options.fn(this)
+                        }
+                        return options.inverse(this)
+                    }
+                }
         })
         app.engine('handlebars', hbs.engine)
         app.set('view engine', 'handlebars')

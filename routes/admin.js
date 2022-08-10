@@ -5,13 +5,14 @@ require('../models/Category')
 const Category = mongoose.model('categories')
 require('../models/Post')
 const Post = mongoose.model('posts')
+const {isAdmin} = require('../helpers/isAdmin')
 
-router.get('/', (req, res) => {
+router.get('/', isAdmin, (req, res) => {
     res.render('admin/index')
 })
 
 // Posts
-    router.get('/posts', (req, res) => {
+    router.get('/posts', isAdmin, (req, res) => {
         Post.find().lean().populate('category').sort({date: 'desc'}).then((posts) => {
             res.render('admin/posts', {posts: posts})
         }).catch((err) => {
@@ -20,7 +21,7 @@ router.get('/', (req, res) => {
         })
     })
 
-    router.get('/posts/add', (req, res) => {
+    router.get('/posts/add', isAdmin, (req, res) => {
         Category.find().lean().then((categories) => {
             res.render('admin/addpost', {categories: categories})
         }).catch((err) => {
@@ -29,7 +30,7 @@ router.get('/', (req, res) => {
         })
     })
 
-    router.post('/posts/new', (req, res) => {
+    router.post('/posts/new', isAdmin, (req, res) => {
         var errors = []
 
         if(req.body.category == 0) {
@@ -57,7 +58,7 @@ router.get('/', (req, res) => {
         }
     })
 
-    router.get('/posts/edit/:id', (req, res) => {
+    router.get('/posts/edit/:id', isAdmin, (req, res) => {
         Post.findOne({_id: req.params.id}).lean().then((post) => {
             Category.find().lean().then((categories) => {
                 res.render('admin/editposts', {categories: categories, post: post})
@@ -71,7 +72,7 @@ router.get('/', (req, res) => {
         })  
     })
 
-    router.post('/posts/edit', (req, res) => {
+    router.post('/posts/edit', isAdmin, (req, res) => {
         Post.findOne({_id: req.body.id}).then((post) => {
             post.title = req.body.title
             post.slug = req.body.slug
@@ -91,7 +92,7 @@ router.get('/', (req, res) => {
         })
     })
 
-    router.post('/posts/delete', (req, res) => {
+    router.post('/posts/delete', isAdmin, (req, res) => {
         Post.remove({_id: req.body.id}).then(() => {
             req.flash('success_msg', 'Post deleted successfully!')
             res.redirect('/admin/posts')
@@ -102,7 +103,7 @@ router.get('/', (req, res) => {
     })
 
 // Categories
-    router.get('/categories', (req, res) => {
+    router.get('/categories', isAdmin, (req, res) => {
         Category.find().lean().sort({date: 'desc'}).then((categories) => {
             res.render('admin/categories', {categories: categories})
         }).catch((err) => {
@@ -111,11 +112,11 @@ router.get('/', (req, res) => {
         })
     })
 
-    router.get('/categories/add', (req, res) => {
+    router.get('/categories/add', isAdmin, (req, res) => {
         res.render('admin/addcategory')
     })
 
-    router.post('/categories/new', (req, res) => {
+    router.post('/categories/new', isAdmin, (req, res) => {
         var errors = []
 
         if(!req.body.name) {
@@ -148,7 +149,7 @@ router.get('/', (req, res) => {
         }
     })
 
-    router.get('/categories/edit/:id', (req, res) => {
+    router.get('/categories/edit/:id', isAdmin, (req, res) => {
         Category.findOne({_id: req.params.id}).lean().then((category) => {
             res.render('admin/editcategory', {category: category})
         }).catch((err) => {
@@ -158,7 +159,7 @@ router.get('/', (req, res) => {
         
     })
 
-    router.post('/categories/edit', (req, res) => {
+    router.post('/categories/edit', isAdmin, (req, res) => {
         Category.findOne({_id: req.body.id}).then((category) => {
             category.name = req.body.name
             category.slug = req.body.slug
@@ -175,7 +176,7 @@ router.get('/', (req, res) => {
         })
     })
 
-    router.post('/categories/delete', (req, res) => {
+    router.post('/categories/delete', isAdmin, (req, res) => {
         Category.remove({_id: req.body.id}).then(() => {
             req.flash('success_msg', 'Category deleted successfully!')
             res.redirect('/admin/categories')
