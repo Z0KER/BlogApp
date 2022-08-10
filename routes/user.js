@@ -5,12 +5,14 @@ require('../models/User')
 const User = mongoose.model('users')
 const bcrypt = require('bcryptjs')
 const passport = require('passport')
+const {loggedIn} = require('../helpers/loggedIn')
+const {loggedOut} = require('../helpers/loggedOut')
 
-router.get('/register', (req, res) => {
+router.get('/register', loggedIn, (req, res) => {
     res.render('users/register')
 })
 
-router.post('/register', (req, res) => {
+router.post('/register', loggedIn, (req, res) => {
     let errors = []
 
     if(!req.body.name) {
@@ -72,16 +74,28 @@ router.post('/register', (req, res) => {
     }
 })
 
-router.get('/login', (req, res) => {
+router.get('/login', loggedIn, (req, res) => {
     res.render('users/login')
 })
 
-router.post('/login', (req, res, next) => {
+router.post('/login', loggedIn, (req, res, next) => {
     passport.authenticate('local', {
         successRedirect: '/',
         failureRedirect: '/users/login',
         failureFlash: true
     })(req, res, next)
+})
+
+router.get('/logout', loggedOut, function(req, res, next) {
+    req.logout((err) => {
+        if (err) { 
+            return next(err) 
+        } else {
+            req.flash('success_msg', 'Successfully logged out!')
+            res.redirect('/')
+        }
+        
+    })
 })
 
 module.exports = router
