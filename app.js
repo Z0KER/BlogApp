@@ -13,15 +13,20 @@
     require('./models/Category')
     const Category = mongoose.model('categories')
     const users = require('./routes/user')
+    const passport = require('passport')
+    require('./config/auth')(passport)
 
-// Configurações
+// Settings
     // Session
         app.use(session({
             secret: 'P4$6^h35YQ8z',
             resave: true,
             saveUninitialized: true
         }))
-        app.use(flash())
+
+        app.use(passport.initialize())
+        app.use(passport.session())
+        app.use(flash()) 
 
     // Middleware
         app.use((req, res, next) => {
@@ -52,7 +57,7 @@
     // Public
         app.use(express.static(path.join(__dirname, 'public')))
 
-// Rotas
+// Routes
     app.get('/', (req, res) => {
         Post.find().lean().populate('category').sort({date: 'desc'}).then((posts) => {
             res.render('index', {posts: posts})
@@ -116,7 +121,7 @@
     app.use('/admin', admin)
     app.use('/users', users)
 
-// Outros
+// Others
     const PORT = 8080
     app.listen(PORT, () => {
         console.log('Server running!')
