@@ -9,5 +9,24 @@
     "mongoose": "^6.5.1",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0"
-  }
+  },
+  "name": "blogapp",
+  "description": "Projeto em desenvolvimento",
+  "version": "1.0.0",
+  "main": "app.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Z0KER/BlogApp.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Z0KER/BlogApp/issues"
+  },
+  "homepage": "https://github.com/Z0KER/BlogApp#readme"
 }

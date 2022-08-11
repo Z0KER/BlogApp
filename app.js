@@ -15,6 +15,7 @@
     const users = require('./routes/user')
     const passport = require('passport')
     require('./config/auth')(passport)
+    const db = require('./config/db')
 
 // Settings
     // Session
@@ -64,7 +65,7 @@
 
     // Mongoose
         mongoose.Promise = global.Promise
-        mongoose.connect('mongodb://localhost/blogapp').then(() => {
+        mongoose.connect(db.mongoURI).then(() => {
             console.log('Connected to MongoDB')
         }).catch((err) => {
             console.log('Error connecting: ' + err)
@@ -138,7 +139,7 @@
     app.use('/users', users)
 
 // Others
-    const PORT = 8080
+    const PORT = process.env.PORT || 8080
     app.listen(PORT, () => {
         console.log('Server running!')
     })
